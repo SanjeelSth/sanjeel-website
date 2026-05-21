@@ -425,6 +425,44 @@
     .footer-inner { max-width: var(--max-w); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
     .footer-inner span { font-family: var(--font-mono); font-size: 0.65rem; color: var(--ink-muted); }
 
+    /* ── CERT MODAL ── */
+    .cert-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.65); backdrop-filter: blur(6px);
+      align-items: center; justify-content: center; padding: 2rem;
+    }
+    .cert-modal-overlay.open { display: flex; animation: fadeIn 0.2s ease; }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+    .cert-modal {
+      background: var(--cream); border-radius: 20px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+      max-width: 860px; width: 100%; position: relative;
+      overflow: hidden; animation: slideUp 0.25s ease;
+    }
+    @keyframes slideUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform:none; } }
+    .cert-modal-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    .cert-modal-header span { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-muted); letter-spacing: 0.08em; text-transform: uppercase; }
+    .cert-modal-close {
+      background: none; border: none; cursor: pointer; font-size: 1.3rem;
+      color: var(--ink-muted); line-height: 1; padding: 0.2rem 0.4rem; border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .cert-modal-close:hover { color: var(--ink); background: var(--cream-dark); }
+    .cert-modal-body { padding: 1.5rem; }
+    .cert-modal-body iframe {
+      width: 100%; height: 520px; border: none; border-radius: 10px;
+      background: #f5f5f5;
+    }
+    .cert-card.clickable { cursor: pointer; }
+    .cert-card.clickable:hover { border-color: rgba(0,0,0,0.25); }
+    .cert-click-hint {
+      font-family: var(--font-mono); font-size: 0.6rem; color: var(--ink-muted);
+      margin-top: 0.25rem; letter-spacing: 0.04em;
+    }
+
     /* ── REVEAL ── */
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
     .reveal.in { opacity: 1; transform: none; }
@@ -728,11 +766,11 @@
       <div class="s-eyebrow">Certifications</div>
       <h2 class="s-title">Verified<br/><em>Credentials</em></h2>
       <div class="certs-wrap">
-        <div class="cert-card reveal">
+        <div class="cert-card clickable reveal" onclick="openCertModal()">
           <div class="cert-issuer">Cisco · Networking Academy</div>
           <div class="cert-name">Introduction to Cybersecurity</div>
           <div class="cert-meta">Issued May 21, 2026</div>
-          <div class="cert-foot"><span class="cert-badge">Cybersecurity</span><a href="#" class="cert-verify">Verify ↗</a></div>
+          <div class="cert-foot"><span class="cert-badge">Cybersecurity</span><span class="cert-click-hint">Click to view certificate ↗</span></div>
         </div>
         <div class="cert-card reveal">
           <div class="cert-issuer">Google · Coursera</div>
@@ -802,6 +840,19 @@
     </div>
   </footer>
 
+  <!-- CERTIFICATE MODAL -->
+  <div class="cert-modal-overlay" id="certModal" onclick="closeCertModalOutside(event)">
+    <div class="cert-modal">
+      <div class="cert-modal-header">
+        <span>Cisco · Introduction to Cybersecurity</span>
+        <button class="cert-modal-close" onclick="closeCertModal()">✕</button>
+      </div>
+      <div class="cert-modal-body">
+        <iframe src="assets/Introduction_to_cyber_security.pdf" title="Cisco Introduction to Cybersecurity Certificate"></iframe>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Mobile menu
     const toggle = document.getElementById('mobToggle');
@@ -853,6 +904,20 @@
       ok.classList.add('show');
       setTimeout(() => ok.classList.remove('show'), 5000);
     }
+
+    // Cert modal
+    function openCertModal() {
+      document.getElementById('certModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeCertModal() {
+      document.getElementById('certModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function closeCertModalOutside(e) {
+      if (e.target === document.getElementById('certModal')) closeCertModal();
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCertModal(); });
 
     // Hero entrance
     ['hero-pre','hero-name','hero-body','hero-btns'].forEach((cls, i) => {
