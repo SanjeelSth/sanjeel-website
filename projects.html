@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — Sanjeel Shrestha</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #f2f0eb; --cream-dark: #e8e5de; --cream-darker: #ddd9d0;
+      --ink: #1a1a1a; --ink-light: #3d3d3a; --ink-muted: #7a7870;
+      --font-display: 'DM Serif Display', serif;
+      --font-body: 'Instrument Sans', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+      --max-w: 1100px; --nav-h: 72px;
+    }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { background: var(--cream); color: var(--ink); font-family: var(--font-body); font-weight: 400; line-height: 1.65; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: radial-gradient(circle, rgba(0,0,0,0.09) 1px, transparent 1px);
+      background-size: 22px 22px;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 1.25rem; left: 50%; transform: translateX(-50%);
+      z-index: 200; background: #e8e3d8; border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 999px; padding: 0.45rem 0.5rem;
+      display: flex; align-items: center; gap: 0.25rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+    }
+    nav a {
+      font-family: var(--font-body); font-size: 0.82rem; font-weight: 500;
+      color: var(--ink-muted); padding: 0.45rem 1.1rem; border-radius: 999px;
+      transition: background 0.2s, color 0.2s; white-space: nowrap;
+    }
+    nav a:hover { color: var(--ink); }
+    nav a.active { background: var(--ink); color: var(--cream); }
+
+    /* Mobile nav */
+    .mob-nav-toggle {
+      display: none; position: fixed; top: 1rem; right: 1.25rem; z-index: 201;
+      background: #1c1c1c; border: none; border-radius: 999px;
+      padding: 0.65rem 1rem; color: #fff; font-size: 0.75rem;
+      font-family: var(--font-body); cursor: pointer; gap: 0.4rem; align-items: center;
+    }
+    .mob-sheet {
+      display: none; position: fixed; inset: 0; z-index: 190;
+      background: var(--cream); flex-direction: column;
+      justify-content: center; align-items: center; gap: 2rem;
+    }
+    .mob-sheet.open { display: flex; }
+    .mob-sheet a { font-size: 1.5rem; font-family: var(--font-display); color: var(--ink); }
+
+    /* MARQUEE */
+    .marquee {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+      height: 36px; overflow: hidden; background: var(--ink);
+      display: flex; align-items: center;
+    }
+    .marquee-track { display: flex; white-space: nowrap; animation: scroll 30s linear infinite; }
+    .marquee-track span { font-family: var(--font-body); font-size: 0.65rem; font-weight: 600; color: rgba(255,255,255,0.75); letter-spacing: 0.12em; text-transform: uppercase; padding: 0 2rem; }
+    .marquee-track span::after { content: ' ✦'; opacity: 0.4; }
+    @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* PAGE HEADER */
+    .page-header {
+      position: relative; z-index: 1;
+      padding: calc(var(--nav-h) + 4rem) 2.5rem 3.5rem;
+      max-width: var(--max-w); margin: 0 auto;
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: var(--font-mono); font-size: 0.68rem; color: var(--ink-muted);
+      letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 2rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--ink); }
+    .page-eyebrow { font-family: var(--font-mono); font-size: 0.68rem; color: var(--ink-muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.85rem; }
+    h1.page-title {
+      font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 1.05; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 1rem;
+    }
+    h1.page-title em { font-style: italic; }
+    .page-subtitle { font-size: 1.05rem; color: var(--ink-light); max-width: 520px; line-height: 1.75; }
+
+    /* FILTER TABS */
+    .filter-wrap {
+      position: relative; z-index: 1;
+      max-width: var(--max-w); margin: 0 auto; padding: 0 2.5rem 3rem;
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+    }
+    .filter-btn {
+      font-family: var(--font-mono); font-size: 0.65rem; font-weight: 600;
+      padding: 0.45rem 1rem; border-radius: 999px; cursor: pointer;
+      border: 1.5px solid rgba(0,0,0,0.12); background: transparent; color: var(--ink-muted);
+      transition: all 0.2s; letter-spacing: 0.04em;
+    }
+    .filter-btn:hover { border-color: var(--ink); color: var(--ink); }
+    .filter-btn.active { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+
+    /* PROJECT GRID */
+    .projects-section { position: relative; z-index: 1; padding: 0 2.5rem 8rem; }
+    .all-proj-grid { max-width: var(--max-w); margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem; }
+
+    .proj-card {
+      background: var(--cream-dark); border: 1.5px solid rgba(0,0,0,0.07);
+      border-radius: 20px; padding: 2rem;
+      display: flex; flex-direction: column; gap: 0.85rem;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .proj-card:hover { border-color: rgba(0,0,0,0.18); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+    .proj-card.hidden { display: none; }
+    .proj-flag { font-family: var(--font-mono); font-size: 0.62rem; color: var(--ink-muted); letter-spacing: 0.08em; }
+    .proj-card h3 { font-family: var(--font-display); font-size: 1.3rem; color: var(--ink); line-height: 1.2; }
+    .proj-card p { font-size: 0.9rem; color: var(--ink-light); line-height: 1.75; flex: 1; }
+    .proj-tech-wrap { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .proj-tech-wrap span { font-family: var(--font-mono); font-size: 0.62rem; padding: 0.22rem 0.65rem; border-radius: 999px; background: rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.1); color: var(--ink-light); }
+    .proj-foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+    .proj-link { font-size: 0.82rem; font-weight: 600; color: var(--ink-muted); transition: color 0.2s; }
+    .proj-link:hover { color: var(--ink); }
+    .btn { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; padding: 0.8rem 1.6rem; border-radius: 999px; cursor: pointer; transition: all 0.2s; border: 1.5px solid transparent; }
+    .btn-dark { background: var(--ink); color: var(--cream); }
+    .btn-dark:hover { background: #2d2d2d; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+    .btn-outline { border-color: rgba(0,0,0,0.2); color: var(--ink-light); }
+    .btn-outline:hover { border-color: var(--ink); color: var(--ink); }
+
+    /* Category badge on card */
+    .proj-cat-badge {
+      position: absolute; top: 1.25rem; right: 1.25rem;
+      font-family: var(--font-mono); font-size: 0.55rem; font-weight: 600;
+      padding: 0.18rem 0.6rem; border-radius: 999px; letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .badge-networking { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25); color: #1d4ed8; }
+    .badge-security   { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2);  color: #b91c1c; }
+    .badge-web        { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2);  color: #15803d; }
+
+    /* FOOTER */
+    footer { position: relative; z-index: 1; padding: 1.75rem 2.5rem 4rem; border-top: 1px solid rgba(0,0,0,0.08); }
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
+    .footer-inner span { font-family: var(--font-mono); font-size: 0.65rem; color: var(--ink-muted); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+
+    @media (max-width: 700px) {
+      nav { display: none; }
+      .mob-nav-toggle { display: inline-flex; }
+      .page-header, .filter-wrap, .projects-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PILL NAV -->
+  <nav id="pillNav">
+    <a href="index.html">Home</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#skills">Skills</a>
+    <a href="index.html#experience">Experience</a>
+    <a href="projects.html" class="active">Projects</a>
+    <a href="index.html#education">Education</a>
+    <a href="index.html#certifications">Certifications</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+
+  <!-- MOBILE NAV -->
+  <button class="mob-nav-toggle" id="mobToggle">☰ Menu</button>
+  <div class="mob-sheet" id="mobSheet">
+    <a href="index.html" class="ms-link">Home</a>
+    <a href="index.html#about" class="ms-link">About</a>
+    <a href="index.html#skills" class="ms-link">Skills</a>
+    <a href="index.html#experience" class="ms-link">Experience</a>
+    <a href="projects.html" class="ms-link">Projects</a>
+    <a href="index.html#education" class="ms-link">Education</a>
+    <a href="index.html#certifications" class="ms-link">Certifications</a>
+    <a href="index.html#contact" class="ms-link">Contact</a>
+  </div>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <a href="index.html" class="back-link">← Back to Home</a>
+    <div class="page-eyebrow">All Projects</div>
+    <h1 class="page-title">Every Piece of<br/><em>Work I've Built</em></h1>
+    <p class="page-subtitle">Networking labs, cybersecurity projects, and web tools — built hands-on to develop real-world skills.</p>
+  </div>
+
+  <!-- FILTER TABS -->
+  <div class="filter-wrap">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="networking">Networking</button>
+    <button class="filter-btn" data-filter="security">Security</button>
+    <button class="filter-btn" data-filter="web">Web / Tools</button>
+  </div>
+
+  <!-- ALL PROJECTS -->
+  <div class="projects-section">
+    <div class="all-proj-grid">
+
+      <!-- 1 -->
+      <div class="proj-card reveal" data-cat="networking">
+        <span class="proj-cat-badge badge-networking">Networking</span>
+        <div class="proj-flag">// Completed · May 2026</div>
+        <h3>Two-Site Enterprise Network Design</h3>
+        <p>A complete dual-site enterprise network in Cisco Packet Tracer featuring VLAN segmentation, OSPF dynamic routing, DHCP automation, and extended ACL traffic policy enforcement between Sydney and Melbourne offices.</p>
+        <div class="proj-tech-wrap"><span>Cisco</span><span>OSPF</span><span>VLANs</span><span>DHCP</span><span>ACL</span><span>Packet Tracer</span></div>
+        <div class="proj-foot">
+          <a href="network-report.html" class="btn btn-dark" style="font-size:0.78rem; padding:0.55rem 1.1rem;">View Project ↗</a>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="proj-card reveal" data-cat="networking">
+        <span class="proj-cat-badge badge-networking">Networking</span>
+        <div class="proj-flag">// Completed · May 2026</div>
+        <h3>Project Resilience: Zero-Downtime Enterprise</h3>
+        <p>Enterprise-grade high availability using HSRP dual-router failover, dual-ISP redundancy, EtherChannel, OSPF, and NAT/PAT — achieving 100% uptime across all failover and connectivity test cases.</p>
+        <div class="proj-tech-wrap"><span>HSRP</span><span>EtherChannel</span><span>OSPF</span><span>NAT/PAT</span><span>VLANs</span><span>Cisco</span></div>
+        <div class="proj-foot">
+          <a href="project-resilience.html" class="btn btn-dark" style="font-size:0.78rem; padding:0.55rem 1.1rem;">View Project ↗</a>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="proj-card reveal" data-cat="networking">
+        <span class="proj-cat-badge badge-networking">Networking</span>
+        <div class="proj-flag">// Completed · May 2026</div>
+        <h3>ISP Integration &amp; WAN Configuration</h3>
+        <p>A comprehensive ISP integration report covering WAN link configuration, BGP peering, SLA documentation, and multi-site connectivity planning for enterprise network infrastructure.</p>
+        <div class="proj-tech-wrap"><span>WAN</span><span>ISP Integration</span><span>BGP</span><span>Cisco</span><span>SLA</span></div>
+        <div class="proj-foot">
+          <a href="isp-integration.html" class="btn btn-dark" style="font-size:0.78rem; padding:0.55rem 1.1rem;">View Project ↗</a>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="proj-card reveal" data-cat="networking">
+        <span class="proj-cat-badge badge-networking">Networking</span>
+        <div class="proj-flag">// Completed · May 2026</div>
+        <h3>Apex Solutions Network Design</h3>
+        <p>A full VLAN network design and configuration for a fictional Sydney company using Cisco Packet Tracer — switch and router configuration via CLI, inter-VLAN routing, IP addressing, and connectivity testing.</p>
+        <div class="proj-tech-wrap"><span>Cisco</span><span>VLANs</span><span>Inter-VLAN Routing</span><span>Packet Tracer</span><span>CLI</span></div>
+        <div class="proj-foot">
+          <a href="apex-network.html" class="btn btn-dark" style="font-size:0.78rem; padding:0.55rem 1.1rem;">View Project ↗</a>
+          <a href="assets/Apex_Network_Design_Report_Sanjeel.pdf" target="_blank" class="proj-link">Report →</a>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="proj-card reveal" data-cat="networking">
+        <span class="proj-cat-badge badge-networking">Networking</span>
+        <div class="proj-flag">// Completed · May 2026</div>
+        <h3>Static Routing — Inter-Office WAN</h3>
+        <p>A Cisco Packet Tracer lab simulating a WAN between Apex Solutions' Sydney and Melbourne offices. Configured static routes, point-to-point /30 WAN links, and verified bidirectional connectivity with 0% packet loss.</p>
+        <div class="proj-tech-wrap"><span>Cisco</span><span>Static Routing</span><span>WAN</span><span>IPv4</span><span>Packet Tracer</span></div>
+        <div class="proj-foot">
+          <a href="static-routing.html" class="btn btn-dark" style="font-size:0.78rem; padding:0.55rem 1.1rem;">View Report ↗</a>
+          <a href="https://github.com/SanjeelSth" target="_blank" class="proj-link">GitHub →</a>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="proj-card reveal" data-cat="security">
+        <span class="proj-cat-badge badge-security">Security</span>
+        <div class="proj-flag">// Completed · May 2026</div>
+        <h3>Phishing Email Analysis Report</h3>
+        <p>A professional SOC-style analysis of three real-world phishing emails, documenting indicators of compromise, attacker techniques, and actionable recommendations — the kind of work a SOC analyst does daily.</p>
+        <div class="proj-tech-wrap"><span>Phishing</span><span>IOC Analysis</span><span>Threat Detection</span><span>Vishing</span><span>Social Engineering</span></div>
+        <div class="proj-foot">
+          <a href="assets/Phishing_Analysis_Report_Sanjeel.pdf" target="_blank" class="btn btn-dark" style="font-size:0.78rem; padding:0.55rem 1.1rem;">View Report ↗</a>
+          <a href="https://github.com/SanjeelSth" target="_blank" class="proj-link">GitHub →</a>
+        </div>
+      </div>
+
+      <!-- 7 -->
+      <div class="proj-card reveal" data-cat="web">
+        <span class="proj-cat-badge badge-web">Web / Tool</span>
+        <div class="proj-flag">// Completed · May 2026</div>
+        <h3>Password Strength Checker</h3>
+        <p>An interactive tool that analyses password strength in real time based on length, uppercase/lowercase letters, numbers, and symbols — demonstrating core authentication and security awareness concepts.</p>
+        <div class="proj-tech-wrap"><span>JavaScript</span><span>HTML</span><span>CSS</span><span>Authentication</span></div>
+        <div class="proj-foot">
+          <a href="https://6a117d8ba5326d5bd4df8809--tangerine-empanada-027f1f.netlify.app/" target="_blank" class="btn btn-dark" style="font-size:0.78rem; padding:0.55rem 1.1rem;">Live Demo ↗</a>
+          <a href="https://github.com/SanjeelSth/password-checker" target="_blank" class="proj-link">GitHub →</a>
+        </div>
+      </div>
+
+      <!-- 8 -->
+      <div class="proj-card reveal" data-cat="security">
+        <span class="proj-cat-badge badge-security">Security</span>
+        <div class="proj-flag">// Completed · May 2026</div>
+        <h3>Home Network Security Audit &amp; Checker</h3>
+        <p>A two-part cybersecurity project — a professional audit of a fictional Australian household identifying 7 vulnerabilities with risk ratings and recommendations, paired with an interactive personalised security score tool.</p>
+        <div class="proj-tech-wrap"><span>Network Security</span><span>Risk Assessment</span><span>JavaScript</span><span>HTML</span><span>CSS</span></div>
+        <div class="proj-foot">
+          <a href="https://networksecuritychecklist.netlify.app/" target="_blank" class="btn btn-dark" style="font-size:0.78rem; padding:0.55rem 1.1rem;">Live Tool ↗</a>
+          <a href="assets/Network_Security_Audit_Sanjeel.pdf" target="_blank" class="proj-link">Report →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span>© 2025 Sanjeel Shrestha · IT Graduate · Sydney, Australia</span>
+      <span>Built with passion and modern web technologies</span>
+    </div>
+  </footer>
+
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Networking</span><span>Cybersecurity</span><span>Cisco IOS</span><span>OSPF</span><span>VLANs</span><span>DHCP</span><span>ACL</span><span>HSRP</span><span>EtherChannel</span><span>NAT/PAT</span><span>Packet Tracer</span><span>SOC Analysis</span><span>Python</span><span>JavaScript</span><span>Sydney NSW</span>
+      <span>Networking</span><span>Cybersecurity</span><span>Cisco IOS</span><span>OSPF</span><span>VLANs</span><span>DHCP</span><span>ACL</span><span>HSRP</span><span>EtherChannel</span><span>NAT/PAT</span><span>Packet Tracer</span><span>SOC Analysis</span><span>Python</span><span>JavaScript</span><span>Sydney NSW</span>
+    </div>
+  </div>
+
+  <script>
+    // Mobile menu
+    document.getElementById('mobToggle').addEventListener('click', () => document.getElementById('mobSheet').classList.toggle('open'));
+    document.querySelectorAll('.ms-link').forEach(l => l.addEventListener('click', () => document.getElementById('mobSheet').classList.remove('open')));
+
+    // Filter
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.proj-card');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        cards.forEach(c => {
+          const show = f === 'all' || c.dataset.cat === f;
+          c.classList.toggle('hidden', !show);
+        });
+      });
+    });
+
+    // Reveal
+    const revEls = document.querySelectorAll('.reveal');
+    const ro = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    revEls.forEach((el, i) => { el.style.transitionDelay = (i % 4) * 0.07 + 's'; ro.observe(el); });
+  </script>
+</body>
+</html>

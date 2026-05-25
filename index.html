@@ -307,6 +307,7 @@
     .proj-link:hover { color: var(--ink); }
     .proj-note { text-align: center; font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-muted); }
     .proj-note a { color: var(--ink); border-bottom: 1px solid rgba(0,0,0,0.2); }
+    .proj-viewmore { display: flex; flex-direction: column; align-items: center; gap: 1rem; margin-top: 2.5rem; }
 
     /* ── EDUCATION ── */
     #education { background: var(--cream-dark); border-top: 1px solid rgba(0,0,0,0.07); border-bottom: 1px solid rgba(0,0,0,0.07); }
@@ -704,22 +705,20 @@
       <div class="proj-grid">
         <div class="proj-card reveal">
           <div class="proj-flag">// Completed · May 2026</div>
-          <h3>Apex Solutions Network Design</h3>
-          <p>A full VLAN network design and configuration for a fictional Sydney company using Cisco Packet Tracer — including switch and router configuration via CLI, inter-VLAN routing, IP addressing, and connectivity testing.</p>
-          <div class="proj-tech-wrap"><span>Networking</span><span>Cisco</span><span>VLANs</span><span>Inter-VLAN Routing</span><span>Packet Tracer</span><span>CLI</span></div>
+          <h3>Two-Site Enterprise Network Design</h3>
+          <p>A complete dual-site enterprise network build in Cisco Packet Tracer featuring VLAN segmentation, OSPF dynamic routing, DHCP automation, and extended ACL traffic policy enforcement between Sydney and Melbourne offices.</p>
+          <div class="proj-tech-wrap"><span>Networking</span><span>Cisco</span><span>OSPF</span><span>VLANs</span><span>DHCP</span><span>ACL</span><span>Packet Tracer</span></div>
           <div class="proj-foot">
-            <a href="apex-network.html" class="btn btn-dark" style="font-size:0.78rem; padding:0.55rem 1.1rem;">View Project ↗</a>
-            <a href="assets/Apex_Network_Design_Report_Sanjeel.pdf" target="_blank" class="proj-link">View Report →</a>
+            <a href="network-report.html" class="btn btn-dark" style="font-size:0.78rem; padding:0.55rem 1.1rem;">View Project ↗</a>
           </div>
         </div>
         <div class="proj-card reveal">
           <div class="proj-flag">// Completed · May 2026</div>
-          <h3>Static Routing — Inter-Office WAN</h3>
-          <p>A Cisco Packet Tracer lab simulating a wide area network between Apex Solutions' Sydney and Melbourne offices. Configured static routes, point-to-point /30 WAN links, and verified bidirectional connectivity with 0% packet loss.</p>
-          <div class="proj-tech-wrap"><span>Networking</span><span>Cisco</span><span>Static Routing</span><span>WAN</span><span>IPv4</span><span>Packet Tracer</span><span>CLI</span></div>
+          <h3>Project Resilience: Zero-Downtime Enterprise</h3>
+          <p>An enterprise-grade high availability network using HSRP dual-router failover, dual-ISP redundancy, EtherChannel link aggregation, OSPF routing, and NAT/PAT — achieving a 100% uptime design objective across all test cases.</p>
+          <div class="proj-tech-wrap"><span>HSRP</span><span>EtherChannel</span><span>OSPF</span><span>NAT/PAT</span><span>VLANs</span><span>Cisco</span><span>High Availability</span></div>
           <div class="proj-foot">
-            <a href="static-routing.html" class="btn btn-dark" style="font-size:0.78rem; padding:0.55rem 1.1rem;">View Report ↗</a>
-            <a href="https://github.com/SanjeelSth" target="_blank" class="proj-link">GitHub →</a>
+            <a href="project-resilience.html" class="btn btn-dark" style="font-size:0.78rem; padding:0.55rem 1.1rem;">View Project ↗</a>
           </div>
         </div>
         <div class="proj-card reveal">
@@ -732,27 +731,11 @@
             <a href="https://github.com/SanjeelSth" target="_blank" class="proj-link">GitHub →</a>
           </div>
         </div>
-        <div class="proj-card reveal">
-          <div class="proj-flag">// Completed · May 2026</div>
-          <h3>Password Strength Checker</h3>
-          <p>An interactive tool that analyses password strength in real time based on length, uppercase and lowercase letters, numbers, and symbols — demonstrating core authentication and security awareness concepts.</p>
-          <div class="proj-tech-wrap"><span>Cybersecurity</span><span>JavaScript</span><span>HTML</span><span>CSS</span><span>Authentication</span></div>
-          <div class="proj-foot">
-            <a href="https://6a117d8ba5326d5bd4df8809--tangerine-empanada-027f1f.netlify.app/" target="_blank" class="btn btn-dark" style="font-size:0.78rem; padding:0.55rem 1.1rem;">Live Demo ↗</a>
-            <a href="https://github.com/SanjeelSth/password-checker" target="_blank" class="proj-link">GitHub →</a>
-          </div>
-        </div>
-        <div class="proj-card reveal">
-          <div class="proj-flag">// Completed · May 2026</div>
-          <h3>Home Network Security Audit & Checker</h3>
-          <p>A two-part cybersecurity project — a professional network security audit of a fictional Australian household identifying 7 vulnerabilities with risk ratings and recommendations, paired with an interactive tool that lets anyone audit their own home network and receive a personalised security score.</p>
-          <div class="proj-tech-wrap"><span>Cybersecurity</span><span>Network Security</span><span>Risk Assessment</span><span>JavaScript</span><span>HTML</span><span>CSS</span></div>
-          <div class="proj-foot">
-            <a href="https://networksecuritychecklist.netlify.app/" target="_blank" class="btn btn-dark" style="font-size:0.78rem; padding:0.55rem 1.1rem;">Live Tool ↗</a>
-            <a href="assets/Network_Security_Audit_Sanjeel.pdf" target="_blank" class="proj-link">View Report →</a>
-          </div>
-        </div>
-      <p class="proj-note">More coming soon — follow on <a href="https://github.com/SanjeelSth" target="_blank">GitHub</a> for updates.</p>
+      </div>
+      <div class="proj-viewmore reveal">
+        <a href="projects.html" class="btn btn-outline" style="font-size:0.9rem; padding:0.85rem 2rem;">View All Projects →</a>
+        <p class="proj-note" style="margin:0;">8 projects total — networking, security &amp; more</p>
+      </div>
     </div>
   </section>
 
