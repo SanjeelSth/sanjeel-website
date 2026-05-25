@@ -709,7 +709,7 @@
           <p>A complete dual-site enterprise network build in Cisco Packet Tracer featuring VLAN segmentation, OSPF dynamic routing, DHCP automation, and extended ACL traffic policy enforcement between Sydney and Melbourne offices.</p>
           <div class="proj-tech-wrap"><span>Networking</span><span>Cisco</span><span>OSPF</span><span>VLANs</span><span>DHCP</span><span>ACL</span><span>Packet Tracer</span></div>
           <div class="proj-foot">
-            <a href="network-report.html" class="btn btn-dark" style="font-size:0.78rem; padding:0.55rem 1.1rem;">View Project ↗</a>
+            <a href="assets/Network_Report.pdf" target="_blank" class="btn btn-dark" style="font-size:0.78rem; padding:0.55rem 1.1rem;">View Report ↗</a>
           </div>
         </div>
         <div class="proj-card reveal">
@@ -718,7 +718,7 @@
           <p>An enterprise-grade high availability network using HSRP dual-router failover, dual-ISP redundancy, EtherChannel link aggregation, OSPF routing, and NAT/PAT — achieving a 100% uptime design objective across all test cases.</p>
           <div class="proj-tech-wrap"><span>HSRP</span><span>EtherChannel</span><span>OSPF</span><span>NAT/PAT</span><span>VLANs</span><span>Cisco</span><span>High Availability</span></div>
           <div class="proj-foot">
-            <a href="project-resilience.html" class="btn btn-dark" style="font-size:0.78rem; padding:0.55rem 1.1rem;">View Project ↗</a>
+            <a href="assets/Project_Resilience_ZeroDowntime.pdf" target="_blank" class="btn btn-dark" style="font-size:0.78rem; padding:0.55rem 1.1rem;">View Report ↗</a>
           </div>
         </div>
         <div class="proj-card reveal">
@@ -895,17 +895,35 @@
     });
 
     // Contact form
-    function sendForm() {
-      const n = document.getElementById('fn').value.trim();
-      const e = document.getElementById('fe').value.trim();
-      const m = document.getElementById('fm').value.trim();
-      if (!n || !e || !m) return;
-      ['fn','fe','fs','fm'].forEach(id => document.getElementById(id).value = '');
-      const ok = document.getElementById('formOk');
-      ok.classList.add('show');
-      setTimeout(() => ok.classList.remove('show'), 5000);
-    }
+    async function sendForm() {
+  const n = document.getElementById('fn').value.trim();
+  const e = document.getElementById('fe').value.trim();
+  const s = document.getElementById('fs').value.trim();
+  const m = document.getElementById('fm').value.trim();
+  if (!n || !e || !m) return;
 
+  const btn = document.querySelector('#contact .btn-dark');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+
+  const res = await fetch('https://formspree.io/f/xredaoor', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({ name: n, email: e, subject: s, message: m })
+  });
+
+  btn.textContent = 'Send Message';
+  btn.disabled = false;
+
+  if (res.ok) {
+    ['fn','fe','fs','fm'].forEach(id => document.getElementById(id).value = '');
+    const ok = document.getElementById('formOk');
+    ok.classList.add('show');
+    setTimeout(() => ok.classList.remove('show'), 5000);
+  } else {
+    alert('Something went wrong — please email me directly at sanjeel.sth@gmail.com');
+  }
+}
     // Cert modal
     function openCertModal() {
       document.getElementById('certModal').classList.add('open');
